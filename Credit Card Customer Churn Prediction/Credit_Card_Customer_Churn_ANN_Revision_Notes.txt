@@ -1,0 +1,135 @@
+Credit Card Customer Churn Prediction (ANN) - Revision Notes
+
+1. Imported Required Libraries
+
+-   NumPy
+-   Pandas
+-   Matplotlib
+-   Seaborn
+-   Scikit-learn
+-   TensorFlow / Keras
+
+2. Loaded the Dataset
+
+-   Loaded Churn_Modelling.csv
+-   Checked dataset shape and basic information
+
+3. Performed Exploratory Data Analysis (EDA)
+
+-   Viewed first 5 rows (head())
+-   Checked dataset size (shape)
+-   Checked data types (info())
+-   Generated statistical summary (describe())
+-   Checked missing values
+-   Checked duplicate records
+
+4. Removed Unnecessary Columns
+
+-   RowNumber
+-   CustomerId
+-   Surname
+
+5. Separated Features and Target
+
+-   Features (X)
+-   Target (y = Exited)
+
+6. Applied One-Hot Encoding
+
+Converted categorical columns into numerical form: - Geography - Gender
+
+7. Split Dataset
+
+-   80% Training Data
+-   20% Testing Data
+
+8. Applied Feature Scaling
+
+-   Used StandardScaler to normalize numerical features.
+
+9. Built an Artificial Neural Network (ANN)
+
+Created ANN using Keras Sequential API.
+
+Architecture: - Input Layer (11 Features) - Hidden Layer (3 Neurons,
+ReLU) - Output Layer (1 Neuron, Sigmoid)
+
+10. Compiled the Model
+
+-   Optimizer: Adam
+-   Loss Function: Binary Crossentropy
+-   Metric: Accuracy
+
+11. Trained the Model
+
+Used: - Training Data - Multiple Epochs - Validation Split
+
+12. Evaluated the Model
+
+Calculated: - Training Accuracy - Validation Accuracy - Training Loss -
+Validation Loss
+
+13. Made Predictions
+
+Predicted whether a customer will: - Stay (0) - Exit (1)
+
+14. Converted Probabilities into Classes
+
+Used threshold: (y_pred > 0.5).astype(int)
+
+15. Calculated Accuracy
+
+Used: accuracy_score()
+
+16. Generated Confusion Matrix
+
+Analyzed: - True Positive (TP) - True Negative (TN) - False Positive
+(FP) - False Negative (FN)
+
+17. Generated ROC Curve
+
+Evaluated model performance using: - ROC Curve - AUC Score
+
+18. Plotted Accuracy Curve
+
+Saved: - accuracy_curve.png
+
+19. Plotted Loss Curve
+
+Saved: - loss_curve.png
+
+20. Generated Model Architecture Diagram
+
+Saved: - model_architecture.png
+
+21. Saved the Trained Model
+
+Saved ANN model as: - churn_model.keras
+
+22. Saved the Scaler
+
+Saved StandardScaler using: - joblib.dump()
+
+23. Organized the Project
+
+Created: - README.md - requirements.txt - images/ - models/ - .gitignore
+
+Skills Demonstrated
+
+-   Data Preprocessing
+-   Exploratory Data Analysis (EDA)
+-   Feature Engineering
+-   One-Hot Encoding
+-   Feature Scaling
+-   Train-Test Split
+-   Artificial Neural Networks (ANN)
+-   TensorFlow / Keras
+-   Binary Classification
+-   Model Training
+-   Model Evaluation
+-   Accuracy Analysis
+-   Confusion Matrix
+-   ROC Curve & AUC
+-   Model Saving
+-   Scaler Saving
+-   GitHub Project Organization
