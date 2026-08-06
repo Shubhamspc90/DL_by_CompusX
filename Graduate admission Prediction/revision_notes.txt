@@ -1,0 +1,91 @@
+Graduate Admission Prediction (ANN Regression) - Revision Notes
+
+1.  Imported Required Libraries
+
+-   NumPy
+-   Pandas
+-   Matplotlib
+-   Seaborn
+-   Scikit-learn
+-   TensorFlow / Keras
+
+2.  Loaded the Dataset
+
+-   Loaded Admission_Predict.csv
+-   Viewed first 5 rows using head()
+-   Checked dataset shape
+-   Checked dataset information using info()
+-   Generated statistical summary using describe()
+
+3.  Performed EDA
+
+-   Checked missing values
+-   Checked duplicate records
+
+4.  Removed Unnecessary Columns
+
+-   Serial No.
+
+5.  Separated Features and Target
+
+-   Features (X)
+-   Target (y = Chance of Admit)
+
+6.  Split Dataset
+
+-   80% Training Data
+-   20% Testing Data
+
+7.  Applied Feature Scaling
+
+-   StandardScaler
+
+8.  Built ANN
+
+-   Input Layer
+-   Hidden Layer (ReLU)
+-   Output Layer (Linear)
+
+9.  Compiled Model
+
+-   Optimizer: Adam
+-   Loss: Mean Squared Error (MSE)
+-   Metric: Mean Absolute Error (MAE)
+
+10. Trained Model
+
+-   Training Data
+-   Validation Split
+-   Multiple Epochs
+
+11. Evaluated Model
+
+-   Training Loss
+-   Validation Loss
+-   MAE
+-   RMSE
+-   R² Score
+
+12. Made Predictions
+
+13. Generated Graphs
+
+-   loss_curve.png
+-   mae_curve.png
+-   regression_metrics.png
+-   actual_vs_predicted.png
+
+14. Organized Project
+
+-   datasets/
+-   notebook/
+-   results/
+-   README.md
+-   requirements.txt
+-   revision_notes.txt
+-   .gitignore
+
+Skills Demonstrated - Data Preprocessing - EDA - Feature Scaling -
+Train-Test Split - ANN - TensorFlow / Keras - Regression Modeling -
+Model Evaluation - MSE - MAE - RMSE - R² Score - Data Visualization -
+Git & GitHub
