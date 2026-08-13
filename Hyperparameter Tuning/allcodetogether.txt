@@ -1,0 +1,184 @@
+# 1. Read CSV
+df = pd.read_csv("diabetes.csv")
+
+# 2. Separate input and output
+X = df.drop("Outcome", axis=1)
+y = df["Outcome"]
+
+# 3. Train-test split
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
+)
+
+# 4. Scaling
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+
+# 5. Build model for Keras Tuner
+def built_model(hp):
+
+    model = Sequential()
+
+    # Number of hidden layers
+    num_layers = hp.Int(
+        "num_layers",
+        min_value=1,
+        max_value=7,
+        step=1
+    )
+
+    # Input layer
+    model.add(Input(shape=(8,)))
+
+    # Hidden layers
+    for i in range(num_layers):
+
+        # Number of neurons
+        units = hp.Int(
+            f"units{i+1}",
+            min_value=8,
+            max_value=128,
+            step=8
+        )
+
+        # Activation function
+        activation = hp.Choice(
+            f"activation{i+1}",
+            values=["relu", "tanh", "sigmoid"]
+        )
+
+        model.add(
+            Dense(
+                units=units,
+                activation=activation
+            )
+        )
+
+    # Output layer
+    model.add(
+        Dense(
+            1,
+            activation="sigmoid"
+        )
+    )
+
+    # Optimizer
+    optimizer = hp.Choice(
+        "optimizer",
+        values=["adam", "sgd", "rmsprop", "adadelta"]
+    )
+
+    model.compile(
+        optimizer=optimizer,
+        loss="binary_crossentropy",
+        metrics=["accuracy"]
+    )
+
+    return model
+
+
+# 6. Create tuner
+tuner = kt.RandomSearch(
+    built_model,
+    objective="val_accuracy",
+    max_trials=10,
+    directory="my_dir",
+    project_name="deep_learning_tuning",
+    overwrite=True
+)
+
+
+# 7. Show search space
+tuner.search_space_summary()
+
+
+# 8. Search
+tuner.search(
+    X_train,
+    y_train,
+    epochs=5,
+    validation_data=(X_test, y_test)
+)
+
+
+# 9. Show results
+tuner.results_summary()
+
+
+# 10. Get best hyperparameters
+best_hp = tuner.get_best_hyperparameters(num_trials=1)[0]
+
+print("\nBest Hyperparameters:")
+print(best_hp.values)
+
+
+# 11. Print them clearly
+print("\nBest Number of Layers:",
+      best_hp.get("num_layers"))
+
+print("Best Optimizer:",
+      best_hp.get("optimizer"))
+
+for i in range(1, best_hp.get("num_layers") + 1):
+
+    print(
+        f"Layer {i}:",
+        "Units =", best_hp.get(f"units{i}"),
+        "| Activation =", best_hp.get(f"activation{i}")
+    )
+
+
+# 12. Get best model
+best_model = tuner.get_best_models(num_models=1)[0]
+
+# 13. Model summary
+best_model.summary()
+
+
+# 14. Train best model again
+history = best_model.fit(
+    X_train,
+    y_train,
+    epochs=20,
+    validation_data=(X_test, y_test)
+)
+
+
+# 15. Evaluate
+loss, accuracy = best_model.evaluate(
+    X_test,
+    y_test
+)
+
+print("\nTest Loss:", loss)
+print("Test Accuracy:", accuracy)
+
+
+# 16. Accuracy graph
+plt.plot(history.history["accuracy"])
+plt.plot(history.history["val_accuracy"])
+
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+plt.title("Training vs Validation Accuracy")
+
+plt.legend(["Training", "Validation"])
+plt.show()
+
+
+# 17. Loss graph
+plt.plot(history.history["loss"])
+plt.plot(history.history["val_loss"])
+
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.title("Training vs Validation Loss")
+
+plt.legend(["Training", "Validation"])
+plt.show()
